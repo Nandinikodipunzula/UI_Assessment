@@ -1,7 +1,3 @@
-Here's the final `README` content for the three interactive UI components you've shared:
-
----
-
 # Interactive UI Components: Dynamic Tree Menu, Category Search Layout, and Table of Contents
 
 This project demonstrates three interactive UI components:
