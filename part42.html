@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Tree Menu - Part 3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Header Styling */
+        #header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        #header img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        #header-title {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+        }
+
+        /* Footer Styling */
+        #footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+
+        /* Main Layout */
+        #main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        /* Tree Navigation Panel */
+        #tree-container {
+            width: 30%;
+            border-right: 1px solid #ddd;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        .tree {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .tree-item {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .arrow {
+            font-size: 14px;
+            margin-right: 6px;
+        }
+
+        .hidden-arrow {
+            visibility: hidden;
+        }
+
+        .tree-children {
+            display: none;
+            padding-left: 16px;
+            margin: 0;
+        }
+
+        .tree-children.open {
+            display: block;
+        }
+
+        /* Circle Icon for Leaf Nodes */
+        .tree-leaf::before {
+            content: '◉';
+            display: inline-block;
+            margin-right: 8px;
+            color: black;
+        }
+
+        li {
+            list-style-type: none;
+            margin: 0;
+        }
+
+        /* Right-Side Content Area */
+        #content-container {
+            width: 70%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #content-container h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        #content-container p {
+            font-size: 18px;
+            color: #666;
+        }
+
+        /* Modal Styling (Part 2) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 20% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header">
+        <div id="header-title">
+            <img src="https://via.placeholder.com/40" alt="Logo"> <!-- Placeholder for Logo -->
+            <span>Dynamic Tree Menu</span>
+        </div>
+        <div>Welcome!</div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        <!-- Left: Tree / Navigation -->
+        <div id="tree-container">
+            <h2>Part 1: A Dynamic Tree Menu</h2>
+            <ul id="tree" class="tree">
+                <li>
+                    <div class="tree-item">
+                        <span class="arrow">▼</span>
+                        Root
+                    </div>
+                    <ul class="tree-children open">
+                        <li>
+                            <div class="tree-item">
+                                <span class="arrow">►</span>
+                                Parent A
+                            </div>
+                            <ul class="tree-children">
+                                <li class="tree-item tree-leaf">Child A1</li>
+                                <li>
+                                    <div class="tree-item">
+                                        <span class="arrow">►</span>
+                                        Child Parent A2
+                                    </div>
+                                    <ul class="tree-children">
+                                        <li class="tree-item tree-leaf">Child A21</li>
+                                        <li class="tree-item tree-leaf">Child A22</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="tree-item">
+                                <span class="arrow">►</span>
+                                Parent B
+                            </div>
+                            <ul class="tree-children">
+                                <li class="tree-item tree-leaf">Child B1</li>
+                                <li class="tree-item tree-leaf">Child B2</li>
+                                <li class="tree-item tree-leaf">Child Parent B3</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Right: Content Area -->
+        <div id="content-container">
+            <h2>Part 3: Content Area</h2>
+            <div id="content">
+                <h1>Click on a Tree Item</h1>
+                <p>The title of the clicked tree item will appear here.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer">
+        &copy; 2024 Dynamic Tree Menu. All Rights Reserved.
+    </div>
+
+    <!-- Modal Dialog -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close-btn">&times;</span>
+            <p id="modal-text">You clicked on: </p>
+        </div>
+    </div>
+
+ 
+
+
+<script>
+  document.getElementById('tree').addEventListener('click', function(event) {
+      const clickedItem = event.target.closest('.tree-item');
+
+      if (clickedItem) {
+          const arrow = clickedItem.querySelector('.arrow');
+          const childrenContainer = clickedItem.nextElementSibling;
+
+          // Toggle the tree menu
+          if (childrenContainer && childrenContainer.classList.contains('tree-children')) {
+              childrenContainer.classList.toggle('open');
+              arrow.textContent = arrow.textContent === '►' ? '▼' : '►';
+          }
+
+          // Update content area with clicked item's name
+          updateContent(clickedItem.textContent.trim());
+      }
+  });
+
+  // Content Update Function
+  function updateContent(itemName) {
+      const contentContainer = document.getElementById('content');
+      contentContainer.innerHTML = `
+          <h1>${itemName}</h1>
+          <p>You are viewing the content for: <strong>${itemName}</strong>.</p>
+      `;
+  }
+
+  // Remove arrows for leaf nodes
+  document.querySelectorAll('.tree-children li').forEach(item => {
+      const childrenContainer = item.querySelector('.tree-children');
+      const arrow = item.querySelector('.arrow');
+      if (!childrenContainer && arrow) {
+          arrow.classList.add('hidden-arrow');
+      }
+  });
+</script>
+
+</body>
+</html>

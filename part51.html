@@ -1,0 +1,106 @@
+<div class="layout">
+  <!-- Sidebar -->
+  <div class="sidebar">
+      <input type="text" id="searchBar" placeholder="Search categories..." oninput="filterCategories()">
+      <div id="categoryList">
+          <!-- Dynamically populated categories -->
+          <button onclick="updateContent('Category 1', 'Content for Category 1')">Category 1</button>
+          <button onclick="updateContent('Category 2', 'Content for Category 2')">Category 2</button>
+          <button onclick="updateContent('Category 3', 'Content for Category 3')">Category 3</button>
+          <button onclick="updateContent('Category 4', 'Content for Category 4')">Category 4</button>
+          <!-- Add more categories here -->
+          <!-- For demonstration, many categories will be generated below -->
+      </div>
+  </div>
+
+  <!-- Content Area -->
+  <div class="content">
+      <h2 id="content-title">Select a Category</h2>
+      <p id="content-body">Content will appear here</p>
+  </div>
+</div>
+
+<script>
+  // Dynamically generate more categories for demonstration
+  const categoryList = document.getElementById('categoryList');
+  for (let i = 5; i <= 100; i++) {
+      const button = document.createElement('button');
+      button.textContent = `Category ${i}`;
+      button.onclick = () => updateContent(`Category ${i}`, `Content for Category ${i}`);
+      categoryList.appendChild(button);
+  }
+
+  // Function to update content dynamically
+  function updateContent(title, body) {
+      document.getElementById('content-title').textContent = title;
+      document.getElementById('content-body').textContent = body;
+  }
+
+  // Function to filter categories
+  function filterCategories() {
+      const searchText = document.getElementById('searchBar').value.toLowerCase();
+      const buttons = categoryList.getElementsByTagName('button');
+      for (let button of buttons) {
+          if (button.textContent.toLowerCase().includes(searchText)) {
+              button.style.display = '';
+          } else {
+              button.style.display = 'none';
+          }
+      }
+  }
+</script>
+
+<style>
+  .layout {
+      display: flex;
+      gap: 20px;
+      max-height: 100vh;
+      overflow: hidden;
+  }
+
+  /* Sidebar styling */
+  .sidebar {
+      flex: 1;
+      max-width: 200px;
+      border-right: 1px solid #ddd;
+      padding: 10px;
+      overflow-y: auto;
+      background-color: #f7f7f7;
+  }
+
+  .sidebar input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+  }
+
+  .sidebar button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 5px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      text-align: left;
+      cursor: pointer;
+  }
+
+  .sidebar button:hover {
+      background-color: #555;
+  }
+
+  /* Content area styling */
+  .content {
+      flex: 3;
+      padding: 20px;
+      overflow-y: auto;
+  }
+
+  .content h2 {
+      margin-top: 0;
+  }
+</style>

@@ -1,0 +1,114 @@
+<!-- Content Area -->
+<div id="content-container">
+  <div id="toc">
+      <h3>Table of Contents</h3>
+      <input type="text" id="tocSearch" placeholder="Search categories..." oninput="filterTOC()">
+      <ul id="toc-list"></ul>
+  </div>
+  <div id="content-area">
+      <!-- Dynamic content will be populated here -->
+  </div>
+</div>
+
+<script>
+  const tocList = document.getElementById('toc-list');
+  const contentArea = document.getElementById('content-area');
+
+  // Generate a large number of categories dynamically
+  for (let i = 1; i <= 100; i++) {
+      const categoryName = `Category ${i}`;
+
+      // Add to TOC
+      const tocItem = document.createElement('li');
+      tocItem.innerHTML = `<a href="#category-${i}">${categoryName}</a>`;
+      tocList.appendChild(tocItem);
+
+      // Add content to the content area
+      const categorySection = document.createElement('div');
+      categorySection.id = `category-${i}`;
+      categorySection.innerHTML = `
+          <h2>${categoryName}</h2>
+          <p>${generateDummyContent()}</p>
+      `;
+      contentArea.appendChild(categorySection);
+  }
+
+  // Filter TOC based on search
+  function filterTOC() {
+      const searchText = document.getElementById('tocSearch').value.toLowerCase();
+      const tocItems = tocList.getElementsByTagName('li');
+      for (let item of tocItems) {
+          const text = item.textContent.toLowerCase();
+          item.style.display = text.includes(searchText) ? '' : 'none';
+      }
+  }
+
+  // Dummy content generator
+  function generateDummyContent() {
+      return Array(10)
+          .fill("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nec arcu a lacus laoreet dictum.")
+          .join(' ');
+  }
+</script>
+
+<style>
+  /* Content Area Styling */
+  #content-container {
+      display: flex;
+      width: 100%;
+      box-sizing: border-box;
+  }
+
+  #toc {
+      width: 25%;
+      padding: 20px;
+      border-right: 1px solid #ddd;
+      overflow-y: auto;
+  }
+
+  #toc h3 {
+      margin-top: 0;
+  }
+
+  #toc input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+  }
+
+  #toc ul {
+      list-style: none;
+      padding-left: 0;
+  }
+
+  #toc li {
+      margin-bottom: 8px;
+  }
+
+  #toc a {
+      text-decoration: none;
+      color: #333;
+  }
+
+  #toc a:hover {
+      text-decoration: underline;
+  }
+
+  #content-area {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      max-height: 100vh;
+  }
+
+  #content-area h2 {
+      margin-top: 20px;
+  }
+
+  #content-area p {
+      margin-bottom: 20px;
+      color: #666;
+  }
+</style>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Tree Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .tree {
+            list-style: none;
+            padding-left: 0; /* Remove extra padding from the main tree */
+        }
+
+        .tree-item {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .arrow {
+            font-size: 14px;
+            margin-right: 6px;
+        }
+
+        .hidden-arrow {
+            visibility: hidden;
+        }
+
+        .tree-children {
+            display: none;
+            padding-left: 16px;
+            margin: 0; /* Remove excessive margin */
+        }
+
+        .tree-children.open {
+            display: block;
+        }
+
+        .tree-leaf::before {
+            content: '◉';
+            display: inline-block;
+            margin-right: 8px;
+            color: black;
+        }
+
+        /* Style adjustment for spacing */
+        li {
+            list-style-type: none;
+            margin: 0; /* Remove extra vertical spacing */
+        }
+    </style>
+</head>
+<body>
+    <h2>Part 1: A Dynamic Tree Menu</h2>
+
+    <ul id="tree" class="tree">
+        <li>
+            <div class="tree-item">
+                <span class="arrow">▼</span>
+                Root
+            </div>
+            <ul class="tree-children open">
+                <li>
+                    <div class="tree-item">
+                        <span class="arrow">►</span>
+                        Parent A
+                    </div>
+                    <ul class="tree-children">
+                        <li class="tree-leaf">Child A1</li>
+                        <li>
+                            <div class="tree-item">
+                                <span class="arrow">►</span>
+                                Child Parent A2
+                            </div>
+                            <ul class="tree-children">
+                                <li class="tree-leaf">Child A21</li>
+                                <li class="tree-leaf">Child A22</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="tree-item">
+                        <span class="arrow">►</span>
+                        Parent B
+                    </div>
+                    <ul class="tree-children">
+                        <li class="tree-leaf">Child B1</li>
+                        <li class="tree-leaf">Child B2</li>
+                        <li class="tree-leaf">Child Parent B3</li> <!-- No children, treated as a leaf -->
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <script>
+        document.getElementById('tree').addEventListener('click', function(event) {
+            const clickedItem = event.target.closest('.tree-item');
+
+            if (clickedItem) {
+                const arrow = clickedItem.querySelector('.arrow');
+                const childrenContainer = clickedItem.nextElementSibling;
+
+                if (childrenContainer && childrenContainer.classList.contains('tree-children')) {
+                    // Toggle open/close class
+                    childrenContainer.classList.toggle('open');
+                    arrow.textContent = arrow.textContent === '►' ? '▼' : '►';
+                }
+            }
+        });
+
+        // Remove arrows for leaf nodes
+        document.querySelectorAll('.tree-children li').forEach(item => {
+            const childrenContainer = item.querySelector('.tree-children');
+            const arrow = item.querySelector('.arrow');
+            if (!childrenContainer && arrow) {
+                arrow.classList.add('hidden-arrow');
+            }
+        });
+    </script>
+</body>
+</html>
