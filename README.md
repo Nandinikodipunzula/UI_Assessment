@@ -1,4 +1,4 @@
-# Interactive UI Components: Dynamic Tree Menu, Category Search Layout, and Table of Contents
+# Interactive UI:
 
 This project demonstrates three interactive UI components:
 
