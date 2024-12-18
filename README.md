@@ -71,9 +71,13 @@ This project demonstrates three interactive UI components:
 
 ## Installation
 
-1. Copy the provided HTML, CSS, and JavaScript code into an HTML file (e.g., `index.html`).
-2. Open the HTML file in a modern web browser.
-3. Interact with the tree menu, category search layout, or table of contents to view dynamic content.
+1.  Copy the provided HTML, CSS, and JavaScript code into an HTML file (e.g., `index.html`).
+2.  Open the HTML file in a modern web browser.
+3.  Interact with the tree menu, category search layout, or table of contents to view dynamic content.
+
+                       OR
+
+Download the entire project to a desktop and click on html file to view each part
 
 ## Example Usage
 
